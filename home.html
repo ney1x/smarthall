@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartHall – Salones Disponibles</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="home.html" class="navbar-brand">
+      <div class="brand-icon">🏛️</div>
+      Reserva Salones
+    </a>
+    <div class="navbar-nav">
+      <a href="home.html" class="nav-link active">Home</a>
+      <a href="about.html" class="nav-link">About Us</a>
+    </div>
+    <div class="navbar-right">
+      <a href="index.html" class="btn-logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Log out
+      </a>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="content home-content">
+    <h2>Salones Disponibles</h2>
+    <p class="home-sub">Selecciona el espacio que mejor se adapte a tu necesidad.</p>
+
+    <p class="section-title">Vista General</p>
+
+    <div class="filters">
+      <select class="filter-select">
+        <option>Todos</option>
+        <option>Auditorios</option>
+        <option>Salones Formales</option>
+        <option>Co-Working</option>
+      </select>
+      <input class="filter-input" type="text" placeholder="Buscar salón" oninput="filterSalones(this.value)" />
+      <select class="filter-select">
+        <option>Ordenar por nombre del salón</option>
+        <option>Ordenar por capacidad</option>
+        <option>Ordenar por precio</option>
+      </select>
+    </div>
+
+    <div class="salones-grid" id="salones-grid">
+
+      <div class="salon-card" data-name="auditorio">
+        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Auditorio" />
+        <div class="salon-info">
+          <p class="salon-name">Auditorio</p>
+          <div class="salon-meta">
+            <span class="meta-item"><span class="meta-icon">👤</span> 100 pers.</span>
+            <span class="meta-item"><span class="meta-icon">🕐</span> Min. 1h</span>
+          </div>
+          <a href="reserva.html?salon=Auditorio&img=https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600" class="btn btn-primary btn-full">Reservar</a>
+        </div>
+      </div>
+
+      <div class="salon-card" data-name="co-working">
+        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600&q=80" alt="Co-Working" />
+        <div class="salon-info">
+          <p class="salon-name">Co-Working</p>
+          <div class="salon-meta">
+            <span class="meta-item"><span class="meta-icon">👤</span> 100 pers.</span>
+            <span class="meta-item"><span class="meta-icon">🕐</span> Min. 1h</span>
+          </div>
+          <a href="reserva.html?salon=Co-Working&img=https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600" class="btn btn-primary btn-full">Reservar</a>
+        </div>
+      </div>
+
+      <div class="salon-card" data-name="salon formal">
+        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&q=80" alt="Salon Formal" />
+        <div class="salon-info">
+          <p class="salon-name">Salon Formal</p>
+          <div class="salon-meta">
+            <span class="meta-item"><span class="meta-icon">👤</span> 100 pers.</span>
+            <span class="meta-item"><span class="meta-icon">🕐</span> Min. 1h</span>
+          </div>
+          <a href="reserva.html?salon=Salon+Formal&img=https://images.unsplash.com/photo-1511578314322-379afb476865?w=600" class="btn btn-primary btn-full">Reservar</a>
+        </div>
+      </div>
+
+      <div class="salon-card" data-name="salon ballroom">
+        <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600&q=80" alt="Salón Ballroom" />
+        <div class="salon-info">
+          <p class="salon-name">Salón Ballroom</p>
+          <div class="salon-meta">
+            <span class="meta-item"><span class="meta-icon">👤</span> 100 pers.</span>
+            <span class="meta-item"><span class="meta-icon">🕐</span> Min. 1h</span>
+          </div>
+          <a href="reserva.html?salon=Salon+Ballroom&img=https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600" class="btn btn-primary btn-full">Reservar</a>
+        </div>
+      </div>
+
+      <div class="salon-card" data-name="salon con canchas deportivas">
+        <img src="https://images.unsplash.com/photo-1554735490-5974588cbc4b?w=600&q=80" alt="Salon Con Canchas Deportivas" />
+        <div class="salon-info">
+          <p class="salon-name">Salon Con Canchas Deportivas</p>
+          <div class="salon-meta">
+            <span class="meta-item"><span class="meta-icon">👤</span> 100 pers.</span>
+            <span class="meta-item"><span class="meta-icon">🕐</span> Min. 1h</span>
+          </div>
+          <a href="reserva.html?salon=Salon+Canchas+Deportivas&img=https://images.unsplash.com/photo-1554735490-5974588cbc4b?w=600" class="btn btn-primary btn-full">Reservar</a>
+        </div>
+      </div>
+
+      <div class="salon-card" data-name="salon ambiente natural">
+        <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80" alt="Salón Ambiente Natural" />
+        <div class="salon-info">
+          <p class="salon-name">Salón Ambiente Natural</p>
+          <div class="salon-meta">
+            <span class="meta-item"><span class="meta-icon">👤</span> 100 pers.</span>
+            <span class="meta-item"><span class="meta-icon">🕐</span> Min. 1h</span>
+          </div>
+          <a href="reserva.html?salon=Salon+Ambiente+Natural&img=https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600" class="btn btn-primary btn-full">Reservar</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    © 2026. Todos los derechos reservados.
+    <a href="#">Política de privacidad</a>
+    <a href="#">Términos de servicio</a>
+    <a href="#">Configuración de cookies</a>
+  </footer>
+
+</div>
+
+<script>
+  function filterSalones(query) {
+    const cards = document.querySelectorAll('.salon-card');
+    query = query.toLowerCase();
+    cards.forEach(card => {
+      const name = card.dataset.name || '';
+      card.style.display = name.includes(query) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

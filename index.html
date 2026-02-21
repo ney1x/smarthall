@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartHall – Iniciar Sesión</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="login-page">
+
+  <div class="login-card">
+    <div class="login-icon">🏛️</div>
+
+    <h1>¡Bienvenido de nuevo!</h1>
+    <p class="subtitle">Ingresa tus credenciales para continuar</p>
+
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input class="form-control" type="email" id="email" placeholder="" autocomplete="email" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input class="form-control" type="password" id="password" placeholder="" autocomplete="current-password" />
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="show-pass" onchange="togglePassword()" />
+        <label for="show-pass">Mostrar contraseña</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">Iniciar sesión</button>
+    </form>
+
+    <p class="login-footer" style="margin-top:16px;">
+      <a href="#">Crea una cuenta.</a>
+    </p>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pw = document.getElementById('password');
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      window.location.href = 'home.html';
+    }
+  </script>
+</body>
+</html>

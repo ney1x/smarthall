@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartHall – Reservar Salón</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="home.html" class="navbar-brand">
+      <div class="brand-icon">🏛️</div>
+      Reserva Salones
+    </a>
+    <div class="navbar-nav">
+      <a href="home.html" class="nav-link active">Home</a>
+      <a href="about.html" class="nav-link">About Us</a>
+    </div>
+    <div class="navbar-right">
+      <a href="index.html" class="btn-logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Log out
+      </a>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="content" style="padding:32px;">
+    <div class="reserva-content" style="display:grid; grid-template-columns:1fr 340px; gap:24px; max-width:1000px; margin:0 auto;">
+
+      <!-- LEFT PANELS -->
+      <div>
+        <!-- Config Reserva -->
+        <div class="panel">
+          <p class="panel-title">
+            <span class="panel-icon">📅</span>
+            Configuracion de Reserva
+          </p>
+
+          <div class="date-row">
+            <div class="form-group" style="margin-bottom:0">
+              <label style="font-size:13px; font-weight:500; color:#6b7280; margin-bottom:6px; display:block;">Fecha del Evento</label>
+              <input class="form-control" type="date" id="fecha" onchange="updateFecha()" />
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label style="font-size:13px; font-weight:500; color:#6b7280; margin-bottom:6px; display:block;">Hora de inicio</label>
+              <input class="form-control" type="time" id="hora" value="09:00" />
+            </div>
+          </div>
+
+          <p class="duracion-label">Duración (Horas)</p>
+          <div class="duration-pills">
+            <button class="pill" onclick="setDuration(1, this)">1h</button>
+            <button class="pill" onclick="setDuration(2, this)">2h</button>
+            <button class="pill" onclick="setDuration(4, this)">4h</button>
+            <button class="pill active" onclick="setDuration(8, this)">8h</button>
+            <button class="pill inactive" onclick="setDuration(null, this)">✏️</button>
+          </div>
+        </div>
+
+        <!-- Simulación Pago -->
+        <div class="panel">
+          <p class="panel-title">
+            <span class="panel-icon">💳</span>
+            Simulación de Pago
+          </p>
+
+          <div class="pago-status">
+            <div class="pago-left">
+              <div class="pago-icon-wrap">💳</div>
+              <div>
+                <p class="pago-label">Estado del Pago</p>
+                <p class="pago-sub" id="pago-sub">Pendiente de confirmación</p>
+              </div>
+            </div>
+            <button class="btn btn-dark" onclick="simularPago()">Simular Pago</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDEBAR -->
+      <div class="sidebar-panel">
+        <img src="" alt="Salón" class="sidebar-img" id="salon-img" />
+        <p class="sidebar-title" id="salon-name-label">Promedio</p>
+
+        <div class="sidebar-details">
+          <div class="detail-row">
+            <span class="detail-key">Precio por hora</span>
+            <span class="detail-val">$50</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Duracion</span>
+            <span class="detail-val" id="dur-display">8h</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Fecha</span>
+            <span class="detail-val" id="fecha-display">No definida</span>
+          </div>
+        </div>
+
+        <div class="total-row">
+          <span>Total a pagar</span>
+          <span id="total-display">$400</span>
+        </div>
+
+        <div class="sidebar-btn">
+          <button class="btn btn-dark btn-full" onclick="confirmarReserva()">Confirmar Reserva</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    © 2026 Todos los derechos reservados.
+    <a href="#">Política de privacidad</a>
+    <a href="#">Términos de servicio</a>
+    <a href="#">Configuración de cookies</a>
+  </footer>
+
+</div>
+
+<script>
+  const PRICE_PER_HOUR = 50;
+  let currentDuration = 8;
+  let pagoSimulado = false;
+
+  // Read query params
+  const params = new URLSearchParams(window.location.search);
+  const salonName = params.get('salon') || 'Salon Formal';
+  const salonImg = params.get('img') || 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&q=80';
+
+  document.getElementById('salon-img').src = salonImg;
+  document.getElementById('salon-name-label').textContent = salonName;
+
+  function setDuration(hours, btn) {
+    document.querySelectorAll('.pill').forEach(p => {
+      p.classList.remove('active');
+      p.classList.add('inactive');
+    });
+    btn.classList.remove('inactive');
+    btn.classList.add('active');
+
+    if (hours !== null) {
+      currentDuration = hours;
+      updateTotal();
+    }
+  }
+
+  function updateTotal() {
+    document.getElementById('dur-display').textContent = currentDuration + 'h';
+    document.getElementById('total-display').textContent = '$' + (currentDuration * PRICE_PER_HOUR);
+  }
+
+  function updateFecha() {
+    const val = document.getElementById('fecha').value;
+    if (val) {
+      const [y, m, d] = val.split('-');
+      document.getElementById('fecha-display').textContent = `${d}/${m}/${y}`;
+    } else {
+      document.getElementById('fecha-display').textContent = 'No definida';
+    }
+  }
+
+  function simularPago() {
+    pagoSimulado = true;
+    const sub = document.getElementById('pago-sub');
+    sub.textContent = '✅ Pago simulado exitosamente';
+    sub.style.color = '#16a34a';
+  }
+
+  function confirmarReserva() {
+    if (!pagoSimulado) {
+      alert('Por favor simula el pago primero.');
+      return;
+    }
+    alert(`¡Reserva confirmada para ${salonName}!\nDuración: ${currentDuration}h\nTotal: $${currentDuration * PRICE_PER_HOUR}`);
+    window.location.href = 'home.html';
+  }
+
+  // Init active pill
+  document.querySelectorAll('.pill').forEach(p => {
+    if (p.textContent.trim() === '8h') {
+      p.classList.remove('inactive');
+      p.classList.add('active');
+    }
+  });
+</script>
+
+<style>
+  .pill.active { background: var(--blue); color: white; border: none; }
+  .pill.inactive { background: white; color: var(--text); border: 1.5px solid var(--border); }
+</style>
+</body>
+</html>
